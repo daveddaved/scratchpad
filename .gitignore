@@ -1,0 +1,19 @@
+# Ignore IDEA project files
+*.iml
+/.idea
+*.class
+*.log
+# Ignore generated stuff
+*/target
+/target
+*/project/target
+*/project/project/target
+/docs
+*/logs
+.vagrant
+.DS_Store
+*/.ensime
+*/.ensime_cache
+/.ensime
+/.ensime_cache
+
