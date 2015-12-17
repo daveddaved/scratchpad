@@ -31,7 +31,7 @@ object RNG {
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
     val (int, nextRng) = rng.nextInt
     if (int == Int.MinValue) nonNegativeInt(rng)
-    else (math.abs(int),rng)
+    else (math.abs(int),nextRng)
   }
 
   /**
@@ -90,6 +90,7 @@ object RNG {
   type Rand[+A] = RNG => (A, RNG)
 
   val int: Rand[Int] = _.nextInt
+  val bool: Rand[Boolean] = map(int)(_ % 2 == 0)
 
   val _nonNegativeInt:Rand[Int] =
     map(int){ i => if(i == Int.MinValue) math.abs(i+1) else math.abs(i) }
@@ -177,7 +178,6 @@ def nonNegativeLessThan(n:Int):Rand[Int] =
   def _map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
      flatMap(ra) { a => map(rb) {b => f(a,b)} }
 
-
 }
 
 /**
@@ -197,7 +197,8 @@ case class State[S,+A](run: S => (A,S)) {
   def map[B](f: A => B):State[S,B] =
    flatMap( a => unit(f(a)))
 
-  def map2[B,C](sb: State[S,B])(f: (A, B) => C): State[S,C] = for {
+  def map2[B,C](sb: State[S,B])(f: (A, B) => C): State[S,C] =
+    for {
     a <- this
     b <- sb
   } yield f(a,b)
@@ -219,6 +220,7 @@ object State {
     s <- get
     _<- set(f(s))
   } yield ()
+ // def testList = State.sequence(List.fill(10)(unit(1)))
 }
 
 /**
@@ -250,7 +252,7 @@ case class Machine(locked:Boolean, candies:Int, coins: Int)
 
 object testMachine extends App {
   import State._
-  val start = Machine(locked = true,10,5)
+  val start = Machine(locked = true,12,5)
   def simulateMachine(inputs: List[Input]): State[Machine, (Int, Int)] = {
     def rules(in: Input)(m: Machine) = {
       (in, m) match {
@@ -264,4 +266,17 @@ object testMachine extends App {
     states.flatMap(_=> get).map(m => (m.candies,m.coins))
   }
   println(simulateMachine(List(Coin,Turn,Coin,Turn,Coin)).run(start))
+}
+object testState extends App {
+  import State._
+  import RNG._
+  val integers = ints2(10)(Simple(10l))
+  val integers1 = ints(10)(Simple(10l))
+  println(integers)
+  println(integers1)
+  val ls = State.unit(1).run(Simple(10))
+  val lsx = (1 to 5).toList.map(State.unit[RNG,Int](_))
+  println(lsx.map(_.run(Simple(10l))))
+  println(State.sequence(lsx).run(Simple(10l)))
+
 }

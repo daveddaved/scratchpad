@@ -169,13 +169,21 @@ sealed trait Stream[+A] {
       case (Cons(h, t), Cons(hh, tt)) => Some((Some(h()), Some(hh())), (t(), tt()))
     }
 
-  def startsWith[A](s: Stream[A]): Boolean =
+  // special case of `zip`
+  def zip[B](s2: Stream[B]): Stream[(A,B)] =
+    zipWith(s2)((_,_))
+
+  def startsWith[B >: A](s: Stream[B]): Boolean =
     (this, s) match {
       case (Empty, Empty) => true
       case (_, Empty) => false
       case _ => !(this zipWithAll s).exists({ case (o1, o2) => o1.isEmpty || (o1 != o2 && o2.isDefined) })
     }
-
+  def startsWith2[B >: A](that: Stream[B]): Boolean = (this, that) match {
+    case (_,Empty) => {println("this is empty", this); true}
+    case (Cons(h,t),Cons(h2,t2)) if h() == h2() =>{ println(h,h2); t().startsWith2(t2()) }
+    case _ => {println(this.toList,that.toList);false}
+  }
   //
   //    (this,s) match {
   //      case (Empty,Empty) => true
@@ -296,4 +304,5 @@ object testStreams extends App {
 //  println("ScanRightRight : " + from(10).take(5).scanRightRight(0)(_ + _).toList)
   // SO SOS with any implementation fibs2.scanRight(0)(_ + _).take(10).toList
   println(from(1).take(10).tails.take(5).map(_.toListFast).toListFast)
+  println(Stream(1,2,3,4) startsWith2 Stream(1,2))
 }

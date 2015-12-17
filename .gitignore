@@ -1,5 +1,6 @@
 # Ignore IDEA project files
 *.iml
+*.zip
 /.idea
 *.class
 *.log

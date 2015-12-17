@@ -5,7 +5,8 @@ import org.scalacheck._
 
 object ch8testing extends Properties("Chapter8") {
 
-  def sum(xs:List[Int]):Int = xs.map(identity).reduce(_+_)
+  def sum(xs:List[Int]):Int = xs.map(identity).sum
+
 
   val lists = for {
     i <- Gen.posNum[Int]
@@ -28,9 +29,9 @@ object ch8testing extends Properties("Chapter8") {
     sum(xs) == sum(xs.reverse)
   }
   val sumGtOrEqZero = forAll(posList) { xs =>
-    sum(xs) < 0
+    sum(xs) >= 0
   }
-  val ssumRev = forAll(posList) { xs =>
+  val ssumRev = forAll(sameValList) { xs =>
     sum(xs) == xs.head * xs.length
   }
   val maxIsMax = forAll(lists){xs =>

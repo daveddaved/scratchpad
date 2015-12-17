@@ -28,7 +28,7 @@ sealed trait Either[+E, +A] {
     traverse(es)(identity)
 
   def traverse[E, A, B](as:  List[A])(f: A => Either[E, B]): Either[E,  List[B]] = as match {
-    case  Nil => Right( Nil)
+    case  Nil => Right(Nil)
     case Cons(h, t) => f(h).map2(traverse(t)(f)) {  Cons(_, _) }
   }
 }

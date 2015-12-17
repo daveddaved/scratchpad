@@ -1,5 +1,6 @@
 import sbt._
 import sbt.Keys._
+import com.typesafe.sbt.SbtGit._
 
 object ProjectHelper {
 
@@ -14,6 +15,7 @@ object ProjectHelper {
     val additionalConfigs = environments.map(addTestConfig).toList
     if(!nonStandardDirs) IO.createDirectories(standardDirs(name))
     Project(name, file(name))
+        .settings(versionWithGit:_*)
         .settings(commonSettings:_*)
         .configs(IntegrationTest)
         .settings(
@@ -26,18 +28,20 @@ object ProjectHelper {
         ).enablePlugins()
       .settings(Defaults.itSettings:_*)
       .configs(additionalConfigs:_*)
+      .settings(publishTo := Some(Resolver.file(name,  new File(Path.userHome.absolutePath+"/.m2/repository"))))
       .settings(additionalConfigs flatMap makeSettingsForConfig:_*)
   }
 
   lazy val commonSettings = Seq(
     organization := "com.scratchpad",
     version := "0.1.0",
-    scalaVersion := Versions.Scala
+    scalaVersion := Versions.ScalaV
   )
 
   lazy val gitHeadCommitSha = settingKey[Option[String]]("Determine the current git commit SHA.")
   def makeSettingsForConfig(config: Configuration): Seq[Setting[_]] ={
     inConfig(config) (Seq(
+      parallelExecution:=true,
       fork:= true,
       envVars:= Map("TARGET"->config.name)
     ) ++ Defaults.testTasks
