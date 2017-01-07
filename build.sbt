@@ -96,5 +96,3 @@ forcegc:= true
 publishTo := Some(Resolver.file("root",  new File(Path.userHome.absolutePath+"/.m2/repository")))
 publishArtifact := false
 packagedArtifacts in file(".") := Map.empty
-
-
