@@ -55,7 +55,7 @@ object Sorts {
   def quickSort[T](xs: Seq[T])(cp:(T,T) => Boolean): Seq[T] = {
     def go(ys: Seq[T]): TailRec[Seq[T]] =
       ys match {
-        case Nil => done(List[T]())
+        case Seq() => done(List[T]())
         case head +: tail => {
           val (low, high) = tail.partition(cp(_, head))
           for {
@@ -104,7 +104,7 @@ object Sorts {
 }
 object testMs extends App {
 
-  val us = Array.fill(10000000)(scala.util.Random.nextFloat())
+  val us = Array.fill(10000)(scala.util.Random.nextFloat())
   //println(Sorts.quickSort(us)(_<_))
  // assert(Sorts.qs2(us) == us.sortWith(_<_))
   println(Sorts.qs3(us).length)

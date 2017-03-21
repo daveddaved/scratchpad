@@ -1,4 +1,4 @@
-GET /index controllers.Application.index()
-GET /echo/:any controllers.Application.echo(any)
-GET /echo controllers.Application.index()
-GET /file controllers.Application.file()
+# GET /index controllers.Application.index()
+# GET /echo/:any controllers.Application.echo(any)
+# GET /echo controllers.Application.index()
+# GET /file controllers.Application.file()
