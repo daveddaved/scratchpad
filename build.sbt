@@ -62,7 +62,6 @@ lazy val common = (project in file("common")).settings(
     publishTo := Some(Resolver.file("common",  new File(Path.userHome.absolutePath+"/.m2/repository")))
 )
 
-lazy val algs = makeProject("algs")
 lazy val catsddd = makeProject("catsddd")
                     .settings(libraryDependencies++=Seq(Cats, Shapeless))
 
