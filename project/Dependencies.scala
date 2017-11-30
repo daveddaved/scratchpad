@@ -19,7 +19,7 @@ object Dependencies {
   val QuillFinnagle   = "io.getquill"             %% "quill-finagle-mysql"                  % Versions.QuillV
   val Hikari          = "com.zaxxer"              %  "HikariCP"                             % "2.4.5"
   val MySqlAsync      = "com.github.mauricio"     %% "mysql-async"                          % "0.2.19"
-  val Cats            = "org.typelevel"           %% "cats"                                 % Versions.CatsV
+  val Cats            = "org.typelevel"           %% "cats-core"                            % Versions.CatsV
   val Shapeless       = "com.chuusai"             %% "shapeless"                            % Versions.ShapelessV
 }
 object Slf4j {

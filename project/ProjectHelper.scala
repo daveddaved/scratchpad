@@ -4,15 +4,14 @@ import com.typesafe.sbt.SbtGit._
 
 object ProjectHelper {
 
-  def addTestConfig(name:String) = config(name) extend IntegrationTest describedAs s"Environment specific settings for $name"
+//  def addTestConfig(name:String) = config(name) extend IntegrationTest describedAs s"Environment specific settings for $name"
 
   def standardDirs(root:String):List[File] = {
     val stubs = List("/src/main/scala","/src/main/resources","/src/test/scala", "/src/test/resources")
     stubs.map( s  => file(s"./$root$s"))
   }
 
-  def makeProject(name:String ,environments:Seq[String] = Nil, nonStandardDirs:Boolean=false):Project = {
-    val additionalConfigs = environments.map(addTestConfig).toList
+  def makeProject(name:String , nonStandardDirs:Boolean=false):Project = {
     if(!nonStandardDirs) IO.createDirectories(standardDirs(name))
     Project(name, file(name))
         .settings(versionWithGit:_*)
@@ -27,9 +26,7 @@ object ProjectHelper {
           )
         ).enablePlugins()
       .settings(Defaults.itSettings:_*)
-      .configs(additionalConfigs:_*)
       .settings(publishTo := Some(Resolver.file(name,  new File(Path.userHome.absolutePath+"/.m2/repository"))))
-      .settings(additionalConfigs flatMap makeSettingsForConfig:_*)
   }
 
   lazy val commonSettings = Seq(
