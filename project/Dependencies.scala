@@ -21,6 +21,13 @@ object Dependencies {
   val MySqlAsync      = "com.github.mauricio"     %% "mysql-async"                          % "0.2.19"
   val Cats            = "org.typelevel"           %% "cats-core"                            % Versions.CatsV
   val Shapeless       = "com.chuusai"             %% "shapeless"                            % Versions.ShapelessV
+  val Monix           = Seq("io.monix" %% "monix",
+                            "io.monix" %% "monix-types",
+                            "io.monix" %% "monix-execution",
+                            "io.monix" %% "monix-eval",
+                            "io.monix" %% "monix-reactive",
+                            "io.monix" %% "monix-cats")
+                        .map(_ % Versions.MonixV)
 }
 object Slf4j {
   val Sl4jApi = "org.slf4j" % "slf4j-api" % "1.7.5"

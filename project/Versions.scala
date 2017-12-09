@@ -9,6 +9,7 @@ object Versions {
   val QuillV = "2.3.2"
   val CatsV = "1.0.0-RC1"
   val ShapelessV = "2.3.2"
+  val MonixV = "2.3.0"
 }
 
 

@@ -93,4 +93,25 @@ object testCompose extends App {
   println(crd("a")(List("d","g")))
 
 }
-
+object TestPb extends App {
+  import person._
+  import Person._
+  import BankAccount._
+  import com.trueaccord.lenses.Lens
+  val p = Person(
+    firstName = Some("first"),
+    lastName = Some("last"),
+    age = Some(10),
+    address = Some(Address(street = Some("street"),city = Some("city"))),
+    bankAccounts = Vector(BankAccount(Some("route"), Some("number")))
+  )
+  val ageLens = Lens[Person,Int](_.age.getOrElse(0))((p:Person,age:Int) => p.copy(age = Some(age)))
+//  ageLens
+  val p2 = p.update(_.address.street := "New Street", _.firstName := "ffff" )
+  val l3 =(i:Int) => Person().update(_.age := i)
+//  val ls:Lens[Person,Person] = Lens[Person,Person](_.update(_.age := 11))
+  val l1 =  Person().update(_.age := 1)
+  val cp = Person().update(_.age := 1, _.address.street := "asd")
+  println(cp)
+  println(p2)
+}

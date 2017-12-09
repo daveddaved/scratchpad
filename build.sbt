@@ -45,7 +45,7 @@ lazy val common = (project in file("common")).settings(
 )
 
 lazy val catsddd = makeProject("catsddd")
-                    .settings(libraryDependencies++=Seq(Cats, Shapeless))
+                    .settings(libraryDependencies++=Seq(Cats, Shapeless) ++ Monix )
 
 gitHeadCommitSha in ThisBuild:= git.gitHeadCommit.value
 //  {
