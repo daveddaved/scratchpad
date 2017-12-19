@@ -16,7 +16,8 @@ scalacOptions in ThisBuild ++= Seq(
   "-language:implicitConversions",
   "-language:higherKinds",
   "-language:existentials",
-  "-language:postfixOps"
+  "-language:postfixOps",
+  "-Ypartial-unification"
 )
 
 resolvers ++= Seq(
@@ -34,28 +35,9 @@ lazy val fpinscala = makeProject("fpinscala")
         import Process._"""
   )
 
-lazy val common = (project in file("common")).settings(
-  makeVersionProperties := {
-    val propFile = new File((resourceManaged in Compile).value, "version.properties")
-    val content = "version=%s" format gitHeadCommitSha.value.getOrElse("SNAPSHOT")
-    IO.write(propFile, content)
-    Seq(propFile)
-  },
-    publishTo := Some(Resolver.file("common",  new File(Path.userHome.absolutePath+"/.m2/repository")))
-)
+lazy val common = project in file("common")
 
 lazy val catsddd = makeProject("catsddd")
-                    .settings(libraryDependencies++=Seq(Cats, Shapeless) ++ Monix )
-
-gitHeadCommitSha in ThisBuild:= git.gitHeadCommit.value
-//  {
-//  try { Some(Process("git rev-parse HEAD").lines.head) }
-//  catch  { case _: Exception =>  None }
-//}
-
-lazy val makeVersionProperties = settingKey[Seq[File]]("Makes a version properties file.")
+                    .settings(libraryDependencies++=Seq(Cats, Shapeless, TypeSafeConfig) ++ Monix ++ Circe ++ Sttp)
 
 forcegc:= true
-publishTo := Some(Resolver.file("root",  new File(Path.userHome.absolutePath+"/.m2/repository")))
-publishArtifact := false
-//packagedArtifacts in file(".") := Map.empty

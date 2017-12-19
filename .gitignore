@@ -17,4 +17,5 @@
 */.ensime_cache
 /.ensime
 /.ensime_cache
+**/secrets.conf
 

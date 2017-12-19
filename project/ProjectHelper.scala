@@ -14,11 +14,9 @@ object ProjectHelper {
   def makeProject(name:String , nonStandardDirs:Boolean=false):Project = {
     if(!nonStandardDirs) IO.createDirectories(standardDirs(name))
     Project(name, file(name))
-        .settings(versionWithGit:_*)
         .settings(commonSettings:_*)
         .configs(IntegrationTest)
         .settings(
-          version := "1.0-" + gitHeadCommitSha.value.getOrElse("SNAPSHOT"),
           organization := "com.scratchpad",
           libraryDependencies ++= Seq(
           Dependencies.ScalaCheck % "test,it",

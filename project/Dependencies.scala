@@ -21,13 +21,27 @@ object Dependencies {
   val MySqlAsync      = "com.github.mauricio"     %% "mysql-async"                          % "0.2.19"
   val Cats            = "org.typelevel"           %% "cats-core"                            % Versions.CatsV
   val Shapeless       = "com.chuusai"             %% "shapeless"                            % Versions.ShapelessV
-  val Monix           = Seq("io.monix" %% "monix",
-                            "io.monix" %% "monix-types",
-                            "io.monix" %% "monix-execution",
-                            "io.monix" %% "monix-eval",
-                            "io.monix" %% "monix-reactive",
-                            "io.monix" %% "monix-cats")
-                        .map(_ % Versions.MonixV)
+
+  val Sttp = Seq(
+    "com.softwaremill.sttp" %% "core",
+    "com.softwaremill.sttp" %% "async-http-client-backend-monix"
+  ).map(_ % Versions.SttpV)
+
+  val Monix = Seq("io.monix" %% "monix",
+    "io.monix" %% "monix-types",
+    "io.monix" %% "monix-execution",
+    "io.monix" %% "monix-eval",
+    "io.monix" %% "monix-reactive",
+    "io.monix" %% "monix-cats"
+  ).map(_ % Versions.MonixV)
+
+  val Circe = Seq(
+    "io.circe" %% "circe-core",
+    "io.circe" %% "circe-generic",
+    "io.circe" %% "circe-parser",
+    "io.circe" %% "circe-optics",
+    "io.circe" %% "circe-java8"
+  ).map(_ % Versions.CirceV)
 }
 object Slf4j {
   val Sl4jApi = "org.slf4j" % "slf4j-api" % "1.7.5"

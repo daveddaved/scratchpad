@@ -10,6 +10,8 @@ object Versions {
   val CatsV = "1.0.0-RC1"
   val ShapelessV = "2.3.2"
   val MonixV = "2.3.0"
+  val CirceV = "0.8.0"
+  val SttpV = "1.1.2"
 }
 
 
