@@ -24,7 +24,8 @@ object Dependencies {
 
   val Sttp = Seq(
     "com.softwaremill.sttp" %% "core",
-    "com.softwaremill.sttp" %% "async-http-client-backend-monix"
+    "com.softwaremill.sttp" %% "async-http-client-backend-monix",
+    "com.softwaremill.sttp" %% "circe"
   ).map(_ % Versions.SttpV)
 
   val Monix = Seq("io.monix" %% "monix",

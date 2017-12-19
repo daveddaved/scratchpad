@@ -38,6 +38,9 @@ lazy val fpinscala = makeProject("fpinscala")
 lazy val common = project in file("common")
 
 lazy val catsddd = makeProject("catsddd")
-                    .settings(libraryDependencies++=Seq(Cats, Shapeless, TypeSafeConfig) ++ Monix ++ Circe ++ Sttp)
+                    .settings(libraryDependencies++=Seq(Cats, Shapeless) ++ Monix)
+
+lazy val ghe = makeProject("ghe")
+  .settings(libraryDependencies++=Seq(Cats, Shapeless, TypeSafeConfig) ++ Monix ++ Circe ++ Sttp)
 
 forcegc:= true
